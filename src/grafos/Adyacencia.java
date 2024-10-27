@@ -46,7 +46,45 @@ public class Adyacencia {
             System.out.println();
         }  
     }
-      
-   
+
+
+    // DFS (Depth-First Search) Recursivo
+    private void DFSUtil(int valor, boolean[] visitado) {
+        visitado[valor] = true;
+        System.out.print(valor + " ");
+
+        for (int i = 0; i < cantidad; i++) {
+            if (matriz[valor][i] == 1 && !visitado[i]) {
+                DFSUtil(i, visitado);
+            }
+        }
+    }
+
+    public void DFS(int inicio) {
+        boolean[] visitado = new boolean[cantidad];
+        DFSUtil(inicio, visitado);
+    }
+
+
+    // BFS (Breadth-First Search)
+    public void BFS(int inicio) {
+        boolean[] visitado = new boolean[cantidad];
+        Queue<Integer> fila = new LinkedList<>();
+        visitado[inicio] = true;
+        fila.add(inicio);
+
+        while (!fila.isEmpty()) {
+            int v = fila.poll();
+            System.out.print(v + " ");
+
+            for (int i = 0; i < cantidad; i++) {
+                if (matriz[v][i] == 1 && !visitado[i]) {
+                    visitado[i] = true;
+                    fila.add(i);
+                }
+            }
+        }
+    }
+
     
 }

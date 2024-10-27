@@ -47,7 +47,7 @@ public class DFS {
         
         Stack<Integer> pila = new Stack<>();
         pila.push(inicio);
-        
+
         while(!pila.isEmpty()){
             inicio = pila.peek();
             pila.pop();
@@ -59,18 +59,14 @@ public class DFS {
         
            Iterator<Integer> i = lista[inicio].listIterator();
 
-                while (i.hasNext())  
-                { 
-                    int siguiente = i.next(); 
-                    if(visitado[siguiente] == false) 
-                        pila.push(siguiente); 
-                } 
-                  
-            } 
-        
+                while (i.hasNext())
+                {
+                    int siguiente = i.next();
+                    if(visitado[siguiente] == false)
+                        pila.push(siguiente);
+                }
 
-   
-        
+            }
     }
     
     public static void main(String[] args) {
