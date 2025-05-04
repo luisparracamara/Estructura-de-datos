@@ -102,7 +102,7 @@ class LRUNode {
     public LRUNode prev;
     public LRUNode next;
 
-    public LRUNode(int val, int key) {
+    public LRUNode(int key, int val) {
         this.val = val;
         this.key = key;
         this.prev = null;

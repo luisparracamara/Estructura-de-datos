@@ -31,7 +31,7 @@ public class TutorialGrafosByMe {
 
         System.out.println("---MATRIX OF EDGES TO ADJACENCY LIST---");
         int[][] edges = createEdgesList();
-        List<List<Integer>> edgesToList = edgesToList(edges,7);
+        List<List<Integer>> edgesToList = edgesToList(edges, 7);
         System.out.println(edgesToList);
 
     }
@@ -39,28 +39,28 @@ public class TutorialGrafosByMe {
     public static int[][] createMatrix(int numRows, int numColumns) {
         int[][] adjacencyMatrix = new int[numRows][numColumns];
 
-        addEdge(0,1, adjacencyMatrix);
-        addEdge(0,2, adjacencyMatrix);
-        addEdge(0,3, adjacencyMatrix);
+        addEdge(0, 1, adjacencyMatrix);
+        addEdge(0, 2, adjacencyMatrix);
+        addEdge(0, 3, adjacencyMatrix);
 
-        addEdge(1,0, adjacencyMatrix);
-        addEdge(1,5, adjacencyMatrix);
+        addEdge(1, 0, adjacencyMatrix);
+        addEdge(1, 5, adjacencyMatrix);
 
-        addEdge(2,0, adjacencyMatrix);
-        addEdge(2,3, adjacencyMatrix);
+        addEdge(2, 0, adjacencyMatrix);
+        addEdge(2, 3, adjacencyMatrix);
 
-        addEdge(3,0, adjacencyMatrix);
-        addEdge(3,2, adjacencyMatrix);
-        addEdge(3,4, adjacencyMatrix);
+        addEdge(3, 0, adjacencyMatrix);
+        addEdge(3, 2, adjacencyMatrix);
+        addEdge(3, 4, adjacencyMatrix);
 
-        addEdge(4,3, adjacencyMatrix);
-        addEdge(4,6, adjacencyMatrix);
+        addEdge(4, 3, adjacencyMatrix);
+        addEdge(4, 6, adjacencyMatrix);
 
-        addEdge(5,1, adjacencyMatrix);
-        addEdge(5,6, adjacencyMatrix);
+        addEdge(5, 1, adjacencyMatrix);
+        addEdge(5, 6, adjacencyMatrix);
 
-        addEdge(6,4, adjacencyMatrix);
-        addEdge(6,5, adjacencyMatrix);
+        addEdge(6, 4, adjacencyMatrix);
+        addEdge(6, 5, adjacencyMatrix);
 
         printGraph(adjacencyMatrix);
 
@@ -87,7 +87,7 @@ public class TutorialGrafosByMe {
         visited[value] = true;
 
         while (!queue.isEmpty()) {
-            System.out.println("queue: "+queue);
+            System.out.println("queue: " + queue);
             int node = queue.poll();
 //            System.out.println(node + " ");
 
@@ -110,7 +110,7 @@ public class TutorialGrafosByMe {
         visited[starterVertex] = true;
 
         while (!queue.isEmpty()) {
-            System.out.println("queue: "+queue);
+            System.out.println("queue: " + queue);
             int node = queue.poll();
             //System.out.println(node + " ");
 
@@ -139,33 +139,33 @@ public class TutorialGrafosByMe {
             list.add(new ArrayList<>());
         }
 
-        fillAdjacencyList(0,1, list);
-        fillAdjacencyList(0,2, list);
-        fillAdjacencyList(0,3, list);
+        fillAdjacencyList(0, 1, list);
+        fillAdjacencyList(0, 2, list);
+        fillAdjacencyList(0, 3, list);
 
-        fillAdjacencyList(1,0, list);
-        fillAdjacencyList(1,5, list);
+        fillAdjacencyList(1, 0, list);
+        fillAdjacencyList(1, 5, list);
 
-        fillAdjacencyList(2,0, list);
-        fillAdjacencyList(2,3, list);
+        fillAdjacencyList(2, 0, list);
+        fillAdjacencyList(2, 3, list);
 
-        fillAdjacencyList(3,0, list);
-        fillAdjacencyList(3,2, list);
-        fillAdjacencyList(3,4, list);
+        fillAdjacencyList(3, 0, list);
+        fillAdjacencyList(3, 2, list);
+        fillAdjacencyList(3, 4, list);
 
-        fillAdjacencyList(4,3, list);
-        fillAdjacencyList(4,6, list);
+        fillAdjacencyList(4, 3, list);
+        fillAdjacencyList(4, 6, list);
 
-        fillAdjacencyList(5,1, list);
-        fillAdjacencyList(5,6, list);
+        fillAdjacencyList(5, 1, list);
+        fillAdjacencyList(5, 6, list);
 
-        fillAdjacencyList(6,4, list);
-        fillAdjacencyList(6,5, list);
+        fillAdjacencyList(6, 4, list);
+        fillAdjacencyList(6, 5, list);
 
         return list;
     }
 
-    public static void fillAdjacencyList(int source, int destination, List<List<Integer>> adjacencyList ) {
+    public static void fillAdjacencyList(int source, int destination, List<List<Integer>> adjacencyList) {
         adjacencyList.get(source).add(destination);
         //si es grafo dirigido, solo comentar esta linea
         //o si insertas todos los valores
@@ -208,7 +208,7 @@ public class TutorialGrafosByMe {
 
         List<List<Integer>> adjacencyList = new LinkedList<>();
 
-        for (int i = 0; i < adjacencyMatrix.length ; i++) {
+        for (int i = 0; i < adjacencyMatrix.length; i++) {
             List<Integer> adyacentes = new ArrayList<>();
 
             for (int j = 0; j < adjacencyMatrix[i].length; j++) {
@@ -222,17 +222,32 @@ public class TutorialGrafosByMe {
         return adjacencyList;
     }
 
+    // Método para convertir la matriz de aristas a lista de adyacencia, cuando la matriz tiene posicion 0 y es representada por los valores del arreglo en posicion 0
+    // O(V+E)
+    public static List<List<Integer>> convertToAdjacencyList(int[][] graph) {
+        List<List<Integer>> adjacencyList = new ArrayList<>(graph.length);
+        for (int i = 0; i < graph.length; i++) {
+            List<Integer> neighbors = new ArrayList<>();
+            for (int j = 0; j < graph[i].length; j++) {
+                neighbors.add(graph[i][j]);
+            }
+            adjacencyList.add(neighbors);
+        }
+        return adjacencyList;
+    }
+
+
     // el 0 se conecta con el 1,2,3
     public static int[][] createEdgesList() {
         return new int[][]{
-                {0,1},
-                {0,2},
-                {0,3},
-                {1,5},
-                {2,3},
-                {3,4},
-                {4,6},
-                {5,6},
+                {0, 1},
+                {0, 2},
+                {0, 3},
+                {1, 5},
+                {2, 3},
+                {3, 4},
+                {4, 6},
+                {5, 6},
         };
 
     }
@@ -253,7 +268,6 @@ public class TutorialGrafosByMe {
         }
         return adjacencyList;
     }
-
 
 
 }

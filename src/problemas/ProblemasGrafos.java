@@ -7,14 +7,6 @@ public class ProblemasGrafos {
 
     public static void main(String[] args) {
 
-        int[][] graph = {
-                {0,1},
-                {0,2},
-                {0,5},
-                {0,4},
-                {3,2},
-                {6,5}
-        };
 
 //        char[][] graph = {
 //                {'O','X','X','X','X'},
@@ -41,39 +33,93 @@ public class ProblemasGrafos {
 
 //        BFS(0, graph);
 
-        int[][] adjacencyMatrix = new int[7][7];
+        int[][] graph = {
+                {0,1},
+                {1,2},
+                {2,0},
+        };
 
-        addEdge(0,1, adjacencyMatrix);
-        addEdge(0,2, adjacencyMatrix);
-        addEdge(0,3, adjacencyMatrix);
-
-        addEdge(1,0, adjacencyMatrix);
-        addEdge(1,5, adjacencyMatrix);
-
-        addEdge(2,0, adjacencyMatrix);
-        addEdge(2,3, adjacencyMatrix);
-
-        addEdge(3,0, adjacencyMatrix);
-        addEdge(3,2, adjacencyMatrix);
-        addEdge(3,4, adjacencyMatrix);
-
-        addEdge(4,3, adjacencyMatrix);
-        addEdge(4,6, adjacencyMatrix);
-
-        addEdge(5,1, adjacencyMatrix);
-        addEdge(5,6, adjacencyMatrix);
-
-        addEdge(6,4, adjacencyMatrix);
-        addEdge(6,5, adjacencyMatrix);
-
-        printGraph(adjacencyMatrix);
+        System.out.println(canFinish(3, graph));
+        //findCircleNum(graph);
+//        System.out.println(findCircleNum(graph));
 
     }
 
-    public static void addEdge(int source, int destination, int[][] adjacencyMatrix) {
-        adjacencyMatrix[source][destination] = 1;
-        adjacencyMatrix[destination][source] = 1; // Para grafos no dirigidos
+    public static boolean canFinish(int numCourses, int[][] prerequisites) {
+
+        List<List<Integer>> list = createList(numCourses, prerequisites);
+        Set<Integer> validados = new HashSet<>();
+
+        for (int i = 0; i < numCourses; i++) {
+            boolean[] visited = new boolean[list.size()];
+            boolean dfs = dfsFull(i, list, visited, validados);
+            if (!dfs){
+                return false;
+            } else {
+                validados.add(i);
+            }
+        }
+
+        return true;
     }
+
+
+    public static boolean dfsFull(int vertex, List<List<Integer>> list, boolean[] visited, Set<Integer> validados) {
+        visited[vertex] = true;
+        System.out.println("valor: "+vertex);
+
+        for (int i = 0; i < list.get(vertex).size(); i++) {
+            int value = list.get(vertex).get(i);
+            if (!visited[value]) {
+                if (validados.contains(value)) {
+                    return false;
+                }
+                dfsFull(value, list, visited, validados);
+            }
+        }
+        return true;
+    }
+
+    public static List<List<Integer>> createList(int numCourses, int[][] prerequisites) {
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            res.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < prerequisites.length; i++) {
+            int src = prerequisites[i][0];
+            int dest = prerequisites[i][1];
+            res.get(src).add(dest);
+        }
+
+        return res;
+    }
+
+
+    private static void dfs(int vertex, List<List<Integer>> graph, boolean[] visited) {
+        visited[vertex] = true;
+        System.out.print(vertex + " ");
+
+        for (int i = 0; i < graph.get(vertex).size(); i++) {
+            int neighbor = graph.get(vertex).get(i);
+            if (!visited[neighbor]) {
+                dfs(neighbor, graph, visited);
+            }
+        }
+    }
+
+    public static  List<List<Integer>> getList(int[][] graph) {
+        List<List<Integer>> res = new ArrayList<>();
+        for (int i = 0; i < graph.length; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 0; j < graph[i].length; j++) {
+                list.add(graph[i][j]);
+            }
+            res.add(list);
+        }
+        return res;
+    }
+
 
     public static void printGraph(int[][] adjacencyMatrix) {
         for (int i = 0; i < adjacencyMatrix.length; i++) {
@@ -83,7 +129,6 @@ public class ProblemasGrafos {
             System.out.println();
         }
     }
-
 
     public static void BFS(int startVertex, int[][] adjacencyMatrix) {
         boolean[] visited = new boolean[adjacencyMatrix.length];

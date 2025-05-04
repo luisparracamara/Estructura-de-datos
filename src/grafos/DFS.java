@@ -5,6 +5,8 @@
  */
 package grafos;
 
+import problemas.TreeNode;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
@@ -97,27 +99,27 @@ public class DFS {
     
     
     
-// static void dfs(TreeNode arbol){
-//     Stack<TreeNode> stack = new Stack();
-//     stack.push(arbol);
-//     
-//     while(!stack.isEmpty()){
-//         arbol = stack.peek();
-//         stack.pop();
-//         
-//         if (arbol.right != null) {
-//             stack.push(arbol.right);
-//         }
-//         
-//         if (arbol.left != null) {
-//             stack.push(arbol.left);
-//         }
-//         
-//         System.out.print(arbol.val+"-");
-//         
-//     }
-// }
-// 
+ static void dfs(TreeNode arbol){
+     Stack<TreeNode> stack = new Stack();
+     stack.push(arbol);
+
+     while(!stack.isEmpty()){
+         arbol = stack.peek();
+         stack.pop();
+
+         if (arbol.right != null) {
+             stack.push(arbol.right);
+         }
+
+         if (arbol.left != null) {
+             stack.push(arbol.left);
+         }
+
+         System.out.print(arbol.val+"-");
+
+     }
+ }
+
 // 
 // static void dsfRecursivo(TreeNode arbol){
 //    if (arbol != null) {
