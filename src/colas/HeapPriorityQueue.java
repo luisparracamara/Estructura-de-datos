@@ -2,6 +2,7 @@ package colas;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class HeapPriorityQueue {
@@ -21,6 +22,10 @@ public class HeapPriorityQueue {
         // Max-heap
         PriorityQueue<Integer> heap2 = new PriorityQueue<>(Collections.reverseOrder());
         heap2.addAll(Arrays.asList(1,2,3));
+
+        //sorting by some value
+        PriorityQueue<int[]> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(arr -> arr[1]));
+
 
         System.out.println(heap);
         System.out.println(heap2);
