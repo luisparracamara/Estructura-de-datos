@@ -87,9 +87,9 @@ public class TutorialGrafosByMe {
         visited[value] = true;
 
         while (!queue.isEmpty()) {
-            System.out.println("queue: " + queue);
+            //System.out.println("queue: " + queue);
             int node = queue.poll();
-//            System.out.println(node + " ");
+            System.out.println(node + " ");
 
             for (int i = 0; i < adjacencyMatrix[0].length; i++) {
                 if (adjacencyMatrix[node][i] == 1 && !visited[i]) {
@@ -269,5 +269,86 @@ public class TutorialGrafosByMe {
         return adjacencyList;
     }
 
+    public static void bfsMatrixValuesMoreThanOneAndZero(int[][] graph, int start) {
+        boolean[] visited = new boolean[graph.length];
+        Queue<Integer> queue = new LinkedList<>();
+
+        visited[start] = true;
+        queue.offer(start);
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            System.out.println("Visitando: " + node);
+
+            for (int i = 0; i < graph[node].length; i++) {
+                int neighbor = graph[node][i];
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.offer(neighbor);
+                }
+            }
+        }
+    }
+
+    // DFS Recursivo para matriz 2D
+    public static void dfs2DRecursive(int[][] grid, int row, int col, boolean[][] visited) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        // Caso base: fuera de límites o ya visitado
+        if (row < 0 || row >= rows || col < 0 || col >= cols || visited[row][col]) {
+            return;
+        }
+
+        // Procesar la celda actual
+        visited[row][col] = true;
+        System.out.println("Visitado: (" + row + ", " + col + ") = " + grid[row][col]);
+
+        // Llamar recursivamente a los 4 vecinos DIRECTAMENTE
+        dfs2DRecursive(grid, row-1, col, visited);    // Arriba
+        dfs2DRecursive(grid, row+1, col, visited);    // Abajo
+        dfs2DRecursive(grid, row, col-1, visited);    // Izquierda
+        dfs2DRecursive(grid, row, col+1, visited);    // Derecha
+
+    }
+
+    // BFS para matriz 2D (iterativo con cola)
+    public static void bfs2D(int[][] grid, int startRow, int startCol) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        Queue<int[]> queue = new LinkedList<>();
+
+        // Direcciones: arriba, abajo, izquierda, derecha
+        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+        // Iniciar BFS desde el punto inicial
+        queue.offer(new int[]{startRow, startCol});
+        visited[startRow][startCol] = true;
+
+        System.out.println("=== BFS empezando desde (" + startRow + ", " + startCol + ") ===");
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int row = current[0];
+            int col = current[1];
+
+            // Procesar la celda actual
+            System.out.println("Visitado: (" + row + ", " + col + ") = " + grid[row][col]);
+
+            // Explorar todos los vecinos
+            for (int[] dir : directions) {
+                int newRow = row + dir[0];
+                int newCol = col + dir[1];
+
+                // Verificar límites y si no ha sido visitado
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols
+                        && !visited[newRow][newCol]) {
+                    visited[newRow][newCol] = true;
+                    queue.offer(new int[]{newRow, newCol});
+                }
+            }
+        }
+    }
 
 }
