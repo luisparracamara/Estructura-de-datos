@@ -1,5 +1,6 @@
 package grafos.nuevosGrafos;
 
+import arbolesAVL.ArbolAVL;
 import listasEnlazadas.Nodo;
 import problemas.ListNode;
 import problemas.TreeNode;
@@ -52,10 +53,9 @@ public class Problemas {
         ListNode listNode = new ListNode(0, listNode4);
 
         char[][] matrix = {
-                {'1', '1', '0', '0', '0'},
-                {'1', '1', '0', '0', '0'},
-                {'0', '0', '1', '0', '0'},
-                {'0', '0', '0', '1', '1'}
+                {'A', 'B', 'C', 'E'},
+                {'S', 'F', 'C', 'S'},
+                {'A', 'D', 'E', 'E'}
         };
 
 
@@ -77,29 +77,93 @@ public class Problemas {
         node1.next = new ListNode(7);
         node1.next.next = new ListNode(7);
         node1.next.next.next = new ListNode(7);
-//        node1.next.next.next.next = new ListNode(4);
-//        node1.next.next.next.next.next = new ListNode(5);
-//        node1.next.next.next.next.next.next = new ListNode(6);
 
-        //int[] digits = {1,2,3,4,3};
-        int[] digits = {5,4,3,2,1};
-        //Output: [2,3,4,-1,4]
+        char[] digits = {'A', 'A', 'A', 'B', 'B', 'B'};
+        String[] words = {"cdbcbbaaabab"};
 
-        //1,2,6,3,4,5,6
-//        ListNode node6 = new ListNode(6, null);
-//        ListNode node5 = new ListNode(5, node6);
-//        ListNode node4 = new ListNode(4, node5);
-        ListNode node3 = new ListNode(7, null);
-        ListNode node62 = new ListNode(7, node3);
-        ListNode node2 = new ListNode(7, node62);
-        ListNode node = new ListNode(7, node2);
+        //System.out.println(longestDiverseString(0,8,11));
 
+        int[][] trips = {
+                {3, 2, 8},
+                {4, 4, 6},
+                {10, 8, 9}
+        };
+
+
+        //expected 6
+
+        System.out.println(findClosestElements(new int[]{0,0,0,1,3,5,6,7,8,8}, 2, 2));
 
     }
 
 
+    public static List<Integer> findClosestElements(int[] arr, int k, int x) {
+        List<Integer> res = new ArrayList<>();
+        int pos = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == x) {
+                pos = i;
+            }
+        }
 
-    public static boolean validPalindrome(String s) {
+        int min = Integer.MAX_VALUE;
+        if ( pos == 0) {
+            for (int i = 0; i < arr.length; i++) {
+
+                if (x - arr[i] <= min && x - arr[i] >= 0) {
+                    pos = i;
+                    min = x - arr[i];
+                }
+
+                if (arr[i] - x <= min && arr[i] - x >= 0) {
+                    pos = i;
+                    min = arr[i] - x;
+                }
+
+            }
+        }
+
+        System.out.println(arr[pos]);
+
+        //binary search
+        int diffRight = 0;
+        int diffLeft = 0;
+
+        int right = pos+1;
+        int left = pos-1;
+        res.add(arr[pos]);
+        k--;
+        while ( k > 0 ){
+            int mid = arr[pos];
+
+            if (left >= 0) {
+                diffLeft = mid - arr[left];
+            } else {
+                diffLeft = Integer.MAX_VALUE;
+            }
+
+            if (right < arr.length) {
+                diffRight = arr[right] - mid;
+            } else {
+                diffRight = Integer.MAX_VALUE;
+            }
+
+            if (diffLeft <= diffRight) {
+                res.add(arr[left]);
+                left--;
+                k--;
+            } else {
+                res.add(arr[right]);
+                right++;
+                k--;
+            }
+        }
+
+        Collections.sort(res);
+        return res;
+    }
+
+    public static boolean validPalindrome() {
 
         A a = new B();
         a.print();
